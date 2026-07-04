@@ -5,7 +5,7 @@ import numpy as np
 from transformers import pipeline
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
-generator = pipeline("text2text", model="google/flan-t5-small")
+generator = pipeline("text-to-text", model="google/flan-t5-small")
 
 def answer_question(pdf, question):
 
