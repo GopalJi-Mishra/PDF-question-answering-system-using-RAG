@@ -4,6 +4,8 @@ import faiss
 import numpy as np
 from transformers import pipeline
 
+model = SentenceTransformer("all-MiniLM-L6-v2")
+generator = pipeline("text2text-generation", model="google/flan-t5-small")
 
 def answer_question(pdf, question):
 
@@ -21,7 +23,6 @@ def answer_question(pdf, question):
     for i in range(0, len(text), chunk_size):
         chunks.append(text[i:i + chunk_size])
 
-    model = SentenceTransformer("all-MiniLM-L6-v2")
     chunk_embedding = model.encode(chunks)
 
     dimension = chunk_embedding.shape[1]
@@ -51,6 +52,5 @@ Question:
 
 Answer:
 """
-    generator = pipeline("text2text-generation",model="google/flan-t5-small")
     response = generator(prompt, max_new_tokens=100)
     return response[0]["generated_text"]
